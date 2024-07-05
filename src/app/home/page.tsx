@@ -5,6 +5,9 @@ export default async function Page() {
   console.log(session?.user);
 
   return (
-    <p>Home Page</p>
+    <>
+      <p>Home Page</p>
+      <button className="btn">Button</button>
+    </>
   );
 }
