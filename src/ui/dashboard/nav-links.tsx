@@ -1,8 +1,9 @@
 'use client';
 import {
+  ChartBarSquareIcon,
   DocumentDuplicateIcon,
   HomeIcon,
-  UserGroupIcon,
+  UserGroupIcon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -13,8 +14,12 @@ import { usePathname } from 'next/navigation';
 const links = [
   {
     name: 'Home',
-    href: '/dashboard',
+    href: '/home',
     icon: HomeIcon
+  }, {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: ChartBarSquareIcon
   }, {
     name: 'Invoices',
     href: '/dashboard/invoices',

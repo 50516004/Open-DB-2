@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import CardWrapper from "@/src/ui/dashboard/cards";
 import LatestInvoices from "@/src/ui/dashboard/latest-invoices";
 import RevenueChart from "@/src/ui/dashboard/revenue-chart";
@@ -7,8 +6,6 @@ import { CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/s
 import { Suspense } from "react";
 
 export default async function Page() {
-  const session = await auth();
-  console.log(session?.user);
 
   return (
     <main>
