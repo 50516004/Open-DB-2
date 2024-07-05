@@ -1,4 +1,4 @@
-import { auth } from "@/src/auth";
+import { auth } from "@/auth";
 import CardWrapper from "@/src/ui/dashboard/cards";
 import LatestInvoices from "@/src/ui/dashboard/latest-invoices";
 import RevenueChart from "@/src/ui/dashboard/revenue-chart";
