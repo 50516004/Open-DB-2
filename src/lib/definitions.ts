@@ -84,3 +84,26 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+// Open-DB
+export type TableInfo = {
+  table_id: string;
+  creator_id: string;
+  title: string;
+  updated_at: string;
+  view: number;
+};
+
+export type TableInfoView = Omit<TableInfo, 'creator_id'> & {
+  name: string;
+};
+
+export type TableInfoRegister = {
+  e_mail: string;
+  title: string;
+};
+
+export type TableContent = {
+  headers: string[];
+  records: (string | number)[][];
+};

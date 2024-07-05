@@ -2,6 +2,7 @@
 
 import { signIn } from '@/auth';
 import { sql } from '@vercel/postgres';
+import { promises as fs } from "fs";
 import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -139,5 +140,77 @@ export async function authenticate(
       }
     }
     throw error;
+  }
+}
+
+// Open-DB
+export async function upload(id: string, content : object) {
+  try {
+    const text = JSON.stringify(content);
+    await fs.writeFile(`private/${id}.json`, text, 'utf8');
+    console.log('ファイルにデータが書き込まれました。');
+  } catch (err) {
+    console.error('エラーが発生しました:', err);
+  }
+}
+
+export async function download(id: string) {
+  try {
+    const data = await fs.readFile(`private/${id}.json`, 'utf-8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('エラーが発生しました:', err);
+  }
+}
+
+export async function unlinkTable(id: string) {
+  try {
+    const data = await fs.unlink(`private/${id}.json`);
+    console.log('ファイルを削除しました。');
+  } catch (err) {
+    console.error('エラーが発生しました:', err);
+  }
+}
+
+export async function createTable(
+  email: string, title: string, table: object
+) {
+ 
+  // Insert data into the database
+  try {
+    const inserted = await sql`
+      WITH inserted_table AS (
+        INSERT INTO tables (creator_id, title)
+        SELECT id, ${title}
+        FROM users
+        WHERE email = ${email}
+        RETURNING *
+      )
+      SELECT *
+      FROM inserted_table
+    `;
+
+    const table_id = inserted?.rows[0]?.table_id;
+    await upload(table_id, table);
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to Create Invoice.',
+    };
+  }
+ 
+  // Revalidate the cache for the invoices page and redirect the user.
+  revalidatePath('/home');
+  redirect('/home');
+}
+
+export async function deleteTable(id: string) {
+  try {
+    await sql`DELETE FROM tables WHERE table_id = ${id}`;
+    revalidatePath('/home');
+    unlinkTable(id);
+    return { message: 'Deleted Table.' };
+  } catch (error) {
+    return { message: 'Database Error: Failed to Delete Table.' };
   }
 }

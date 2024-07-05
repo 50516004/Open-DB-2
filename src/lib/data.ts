@@ -6,6 +6,7 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  TableInfoView,
 } from './definitions';
 import { formatCurrency } from './utils';
 
@@ -213,5 +214,48 @@ export async function fetchFilteredCustomers(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
+  }
+}
+
+export async function fetchTableInfos() {
+  try {
+    const data = await sql<TableInfoView>`
+      SELECT
+        tables.table_id, 
+        users.name, 
+        tables.title, 
+        tables.updated_at, 
+        tables.view
+      FROM tables
+      JOIN users
+      ON tables.creator_id = users.id
+      `;
+
+    return data.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch tables.');
+  }
+}
+
+// Open-DB
+export async function fetchTableInfoById(id: string) {
+  try {
+    const data = await sql<TableInfoView>`
+      SELECT
+        tables.table_id, 
+        users.name, 
+        tables.title, 
+        tables.updated_at, 
+        tables.view
+      FROM tables
+      JOIN users ON tables.creator_id = users.id
+      WHERE tables.table_id = ${id};
+      `;
+
+    return data.rows[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch table.');
   }
 }
