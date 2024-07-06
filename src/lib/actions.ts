@@ -147,7 +147,7 @@ export async function authenticate(
 export async function upload(id: string, content : object) {
   try {
     const text = JSON.stringify(content);
-    await fs.writeFile(`private/${id}.json`, text, 'utf8');
+    await fs.writeFile(`public/tables/${id}.json`, text, 'utf8');
     console.log('ファイルにデータが書き込まれました。');
   } catch (err) {
     console.error('エラーが発生しました:', err);
@@ -156,7 +156,7 @@ export async function upload(id: string, content : object) {
 
 export async function download(id: string) {
   try {
-    const data = await fs.readFile(`private/${id}.json`, 'utf-8');
+    const data = await fs.readFile(`public/tables/${id}.json`, 'utf-8');
     return JSON.parse(data);
   } catch (err) {
     console.error('エラーが発生しました:', err);
@@ -165,7 +165,7 @@ export async function download(id: string) {
 
 export async function unlinkTable(id: string) {
   try {
-    const data = await fs.unlink(`private/${id}.json`);
+    const data = await fs.unlink(`public/tables/${id}.json`);
     console.log('ファイルを削除しました。');
   } catch (err) {
     console.error('エラーが発生しました:', err);
