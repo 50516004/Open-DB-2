@@ -1,9 +1,11 @@
 'use client'
+
 import { createTable, upload } from "@/src/lib/actions";
 import { TableContent } from "@/src/lib/definitions";
-import { Button } from "@/src/ui/button";
-import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import Buttons from "@/src/ui/tables/form/buttons";
+import Table from "@/src/ui/tables/form/table-editor";
+import TitleEditor from "@/src/ui/tables/form/title-editor";
+import { useState } from "react";
 
 const initialState: TableContent = {
   headers: ["", ""],
@@ -15,107 +17,26 @@ const initialState: TableContent = {
 };
 
 export default function TableForm(
-  {mail}: {mail: string}
+  { mail }: { mail: string }
 ) {
   const [title, setTitle] = useState("");
   const [state, setState] = useState(initialState);
-  const { headers, records } = state;
-
-  function handleHeaderChange(
-    e: ChangeEvent<HTMLInputElement>, i: number
-  ) {
-    const newHeaders = [...state.headers];
-    newHeaders[i] = e.target.value;
-
-    const newState = { ...state, headers: newHeaders };
-    setState(newState);
-  }
-
-  function handleCellChange(
-    e: ChangeEvent<HTMLInputElement>, i: number, j: number
-  ) {
-    const newRecords = state.records.map((row) => [...row]);
-    newRecords[i][j] = e.target.value;
-
-    const newState = { ...state, records: newRecords };
-    setState(newState);
-  }
 
   async function post() {
-    try {
-      const url = await upload(state);
-      await createTable(mail, title, url??"");
-    } catch (error) {
-      console.error('Error:', error);
+    const url = await upload(state);
+    if (!url) {
+      return;
     }
+    await createTable(mail, title, url);
   }
 
   return (
     <div className="flex flex-col gap-4">
-      {/* タイトル入力欄 */}
+      <TitleEditor title={title} setTitle={setTitle} />
       <div>
-        <label>
-          Title
-        </label>
-        {" "}
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder={"タイトル"}
-          className=''
-        />
+        <Table state={state} setState={setState} />
       </div>
-      {/* テーブル入力欄 */}
-      <div>
-        <table className='border-collapse border'>
-          <thead>
-            <tr>
-              {
-                headers.map((header, i) => (
-                  <th key={i}>
-                    <input
-                      type="text"
-                      value={header}
-                      onChange={(e) => handleHeaderChange(e, i)}
-                      placeholder={"列" + (i + 1)}
-                      className='w-full'
-                    />
-                  </th>
-                ))
-              }
-            </tr>
-          </thead>
-          <tbody>
-            {records.map((rec, i) => (
-              <tr key={i}>
-                {
-                  rec.map((cel, j) => (
-                    <td key={j}>
-                      <input
-                        type="text"
-                        value={cel}
-                        onChange={(e) => handleCellChange(e, i, j)}
-                        className='w-full'
-                      />
-                    </td>
-                  ))
-                }
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {/* ボタン */}
-      <div className="flex gap-4">
-        <Link
-          href="/tables"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <Button onClick={post}>Create Table</Button>
-      </div>
+      <Buttons onClick={post} />
     </div>
   );
 };

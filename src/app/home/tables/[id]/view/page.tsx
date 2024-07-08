@@ -10,9 +10,7 @@ type Params = {
 export default async function Page(
   { params }: { params: Params }
 ) {
-
   const id = params.id;
-
   const info = await fetchTableInfoById(id);
   const content = await download(info.content_url);
 

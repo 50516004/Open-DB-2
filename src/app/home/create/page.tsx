@@ -1,25 +1,23 @@
 import { auth } from "@/auth";
-import Breadcrumbs from "@/src/ui/invoices/breadcrumbs";
 import TableForm from "@/src/ui/tables/table-form";
+import { Metadata } from "next";
+import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+  title: 'Create Table',
+};
 
 export default async function Page() {
   const session = await auth();
 
+  const email = session?.user?.email;
+  if (!email) {
+    redirect("/home");
+  }
+
   return (
     <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          {
-            label: 'tables',
-            href: '/tables'
-          }, {
-            label: 'create',
-            href: '/tables/create',
-            active: true,
-          },
-        ]}
-      />
-      <TableForm mail={session?.user?.email ?? ""} />
+      <TableForm mail={email} />
     </main>
   );
 

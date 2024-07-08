@@ -143,9 +143,9 @@ export async function authenticate(
   }
 }
 
-//************************************ */
+/************************************ */
 // Open-DB開発
-//************************************ */
+/************************************ */
 
 /**
  * テーブルアップロード
@@ -162,6 +162,7 @@ export async function upload(content: object) {
     return blob.url;
   } catch (err) {
     console.error('エラーが発生しました:', err);
+    return null;
   }
 }
 
