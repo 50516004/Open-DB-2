@@ -1,35 +1,35 @@
 import { TableContent } from "@/src/lib/definitions";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent } from "react";
+import { Updater } from "use-immer";
 
 export default function Table(
   { 
-    state, 
-    setState 
+    content, 
+    updateContent
   }: { 
-    state: TableContent, 
-    setState: Dispatch<SetStateAction<TableContent>>
+    content: TableContent, 
+    updateContent: Updater<TableContent>
   }
 ) {
-  const { headers, records } = state;
+  const { headers, records } = content;
 
   function handleInputHeader(
-    e: ChangeEvent<HTMLInputElement>, i: number
+    e: ChangeEvent<HTMLInputElement>, 
+    i: number
   ) {
-    const newHeaders = [...state.headers];
-    newHeaders[i] = e.target.value;
-
-    const newState = { ...state, headers: newHeaders };
-    setState(newState);
+    updateContent(draft => {
+      draft.headers[i] = e.target.value;
+    });
   }
 
   function handleInputRecords(
-    e: ChangeEvent<HTMLInputElement>, i: number, j: number
+    e: ChangeEvent<HTMLInputElement>, 
+    i: number, 
+    j: number
   ) {
-    const newRecords = state.records.map((row) => [...row]);
-    newRecords[i][j] = e.target.value;
-
-    const newState = { ...state, records: newRecords };
-    setState(newState);
+    updateContent(draft => {
+      draft.records[i][j] = e.target.value;
+    });
   }
 
   return (

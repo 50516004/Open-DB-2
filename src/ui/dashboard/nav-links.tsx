@@ -1,9 +1,9 @@
 'use client';
 import {
+  BeakerIcon,
   ChartBarSquareIcon,
   DocumentDuplicateIcon,
-  HomeIcon,
-  UserGroupIcon
+  HomeIcon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -25,9 +25,9 @@ const links = [
     href: '/dashboard/invoices',
     icon: DocumentDuplicateIcon,
   }, {
-    name: 'Customers',
-    href: '/dashboard/customers',
-    icon: UserGroupIcon
+    name: 'Blob Test',
+    href: '/home/blob',
+    icon: BeakerIcon
   },
 ];
 
