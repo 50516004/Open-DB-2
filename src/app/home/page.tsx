@@ -1,4 +1,4 @@
-import { deleteTable } from "@/src/lib/actions";
+import { deleteTable, removeTable } from "@/src/lib/actions";
 import { fetchTableInfos } from "@/src/lib/data";
 import { TableInfoView } from "@/src/lib/definitions";
 import { formatDateToLocal } from "@/src/lib/utils";
@@ -72,7 +72,10 @@ async function TableList(
                   <td className="whitespace-nowrap px-3 py-3">
                     <div className="flex gap-3">
                       <ViewTable id={table.table_id} />
-                      <DeleteTable id={table.table_id} />
+                      <DeleteTable
+                        id={table.table_id}
+                        url={table.content_url}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -96,11 +99,18 @@ function ViewTable({ id }: { id: string }) {
   );
 }
 
-function DeleteTable({ id }: { id: string }) {
-  const deleteInvoiceWithId = deleteTable.bind(null, id);
+function DeleteTable(
+  { id, url }: { id: string, url: string }
+) {
+
+  async function action() {
+    'use server'
+    await deleteTable(url);
+    await removeTable(id);
+  }
 
   return (
-    <form action={deleteInvoiceWithId}>
+    <form action={action}>
       <button className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />

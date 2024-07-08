@@ -6,7 +6,7 @@ export default function DataPushButton( { obj }: { obj: object}) {
 
   async function handleClick() {
     try {
-      await upload("", obj);
+      await upload(obj);
     } catch (error) {
       console.error('Error:', error);
     }

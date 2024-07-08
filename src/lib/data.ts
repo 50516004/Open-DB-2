@@ -217,6 +217,8 @@ export async function fetchFilteredCustomers(query: string) {
   }
 }
 
+// Open-DB
+
 export async function fetchTableInfos() {
   try {
     const data = await sql<TableInfoView>`
@@ -225,7 +227,8 @@ export async function fetchTableInfos() {
         users.name, 
         tables.title, 
         tables.updated_at, 
-        tables.view
+        tables.view,
+        tables.content_url
       FROM tables
       JOIN users
       ON tables.creator_id = users.id
@@ -238,7 +241,6 @@ export async function fetchTableInfos() {
   }
 }
 
-// Open-DB
 export async function fetchTableInfoById(id: string) {
   try {
     const data = await sql<TableInfoView>`
@@ -247,7 +249,8 @@ export async function fetchTableInfoById(id: string) {
         users.name, 
         tables.title, 
         tables.updated_at, 
-        tables.view
+        tables.view,
+        tables.content_url
       FROM tables
       JOIN users ON tables.creator_id = users.id
       WHERE tables.table_id = ${id};

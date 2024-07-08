@@ -1,5 +1,5 @@
 'use client'
-import { createTable } from "@/src/lib/actions";
+import { createTable, upload } from "@/src/lib/actions";
 import { TableContent } from "@/src/lib/definitions";
 import { Button } from "@/src/ui/button";
 import Link from "next/link";
@@ -43,7 +43,8 @@ export default function TableForm(
 
   async function post() {
     try {
-      await createTable(mail, title, state);
+      const url = await upload(state);
+      await createTable(mail, title, url??"");
     } catch (error) {
       console.error('Error:', error);
     }

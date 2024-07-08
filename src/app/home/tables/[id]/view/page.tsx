@@ -13,10 +13,8 @@ export default async function Page(
 
   const id = params.id;
 
-  const [info, content] = await Promise.all([
-    fetchTableInfoById(id),
-    download(id),
-  ]);
+  const info = await fetchTableInfoById(id);
+  const content = await download(info.content_url);
 
   return (
     <div className="w-full">

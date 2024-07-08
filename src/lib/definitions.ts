@@ -92,6 +92,7 @@ export type TableInfo = {
   title: string;
   updated_at: string;
   view: number;
+  content_url: string;
 };
 
 export type TableInfoView = Omit<TableInfo, 'creator_id'> & {

@@ -1,8 +1,8 @@
 'use server';
 
 import { signIn } from '@/auth';
+import { del, put } from '@vercel/blob';
 import { sql } from '@vercel/postgres';
-import { promises as fs } from "fs";
 import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -42,7 +42,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
     amount: formData.get('amount'),
     status: formData.get('status'),
   });
- 
+
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
@@ -50,12 +50,12 @@ export async function createInvoice(prevState: State, formData: FormData) {
       message: 'Missing Fields. Failed to Create Invoice.',
     };
   }
- 
+
   // Prepare data for insertion into the database
   const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
- 
+
   // Insert data into the database
   try {
     await sql`
@@ -68,7 +68,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
       message: 'Database Error: Failed to Create Invoice.',
     };
   }
- 
+
   // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
@@ -87,17 +87,17 @@ export async function updateInvoice(
     amount: formData.get('amount'),
     status: formData.get('status'),
   });
- 
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Update Invoice.',
     };
   }
- 
+
   const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
- 
+
   try {
     await sql`
       UPDATE invoices
@@ -107,7 +107,7 @@ export async function updateInvoice(
   } catch (error) {
     return { message: 'Database Error: Failed to Update Invoice.' };
   }
- 
+
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
@@ -143,72 +143,99 @@ export async function authenticate(
   }
 }
 
-// Open-DB
-export async function upload(id: string, content : object) {
+//************************************ */
+// Open-DB開発
+//************************************ */
+
+/**
+ * テーブルアップロード
+ * @param content 
+ * @returns 
+ */
+export async function upload(content: object) {
   try {
     const text = JSON.stringify(content);
-    await fs.writeFile(`public/tables/${id}.json`, text, 'utf8');
+    const blob = await put("tables/table.json", text, {
+      access: 'public',
+    });
     console.log('ファイルにデータが書き込まれました。');
+    return blob.url;
   } catch (err) {
     console.error('エラーが発生しました:', err);
   }
 }
 
-export async function download(id: string) {
+/**
+ * テーブルダウンロード
+ * @param content 
+ * @returns 
+ */
+export async function download(url: string) {
   try {
-    const data = await fs.readFile(`public/tables/${id}.json`, 'utf-8');
-    return JSON.parse(data);
+    const response = await fetch(url);
+    return response.json();
   } catch (err) {
     console.error('エラーが発生しました:', err);
   }
 }
 
-export async function unlinkTable(id: string) {
+/**
+ * テーブル削除
+ * @param url 
+ */
+export async function deleteTable(url: string) {
   try {
-    const data = await fs.unlink(`public/tables/${id}.json`);
+    await del(url);
     console.log('ファイルを削除しました。');
   } catch (err) {
     console.error('エラーが発生しました:', err);
   }
 }
 
+/**
+ * テーブル情報追加
+ * @param email
+ * @param title 
+ * @param url 
+ * @returns 
+ */
 export async function createTable(
-  email: string, title: string, table: object
+  email: string, 
+  title: string, 
+  url: string
 ) {
- 
+
   // Insert data into the database
   try {
-    const inserted = await sql`
-      WITH inserted_table AS (
-        INSERT INTO tables (creator_id, title)
-        SELECT id, ${title}
-        FROM users
-        WHERE email = ${email}
-        RETURNING *
-      )
-      SELECT *
-      FROM inserted_table
+    await sql`
+      INSERT INTO tables (creator_id, title, content_url)
+      SELECT id, ${title}, ${url}
+      FROM users WHERE email = ${email}
     `;
-
-    const table_id = inserted?.rows[0]?.table_id;
-    await upload(table_id, table);
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {
       message: 'Database Error: Failed to Create Invoice.',
     };
   }
- 
+
   // Revalidate the cache for the invoices page and redirect the user.
   revalidatePath('/home');
   redirect('/home');
 }
 
-export async function deleteTable(id: string) {
+/**
+ * テーブル情報削除
+ * @param id 
+ * @returns 
+ */
+export async function removeTable(id: string) {
   try {
     await sql`DELETE FROM tables WHERE table_id = ${id}`;
+
+    // Revalidate the cache
     revalidatePath('/home');
-    unlinkTable(id);
+
     return { message: 'Deleted Table.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Table.' };
