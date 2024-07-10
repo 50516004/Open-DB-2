@@ -2,7 +2,11 @@ import Link from "next/link";
 import { MouseEventHandler } from "react";
 
 export default function Buttons(
-  { onClick }: { onClick: MouseEventHandler<HTMLButtonElement> }
+  {
+    onPost,
+  }: {
+    onPost: MouseEventHandler<HTMLButtonElement>;
+  }
 ) {
   return (
     <div className="flex gap-4">
@@ -13,10 +17,16 @@ export default function Buttons(
         Cancel
       </Link>
       <button
-        onClick={onClick}
+        onClick={onPost}
         className="btn btn-primary"
       >
         Create Table
+      </button>
+      <button
+        onClick={e => {}}
+        className="btn btn-secondary"
+      >
+        View Table
       </button>
     </div>
   );

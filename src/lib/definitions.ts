@@ -99,12 +99,12 @@ export type TableInfoView = Omit<TableInfo, 'creator_id'> & {
   name: string;
 };
 
-export type TableInfoRegister = {
-  e_mail: string;
-  title: string;
-};
+export type ColType = 'text'|'number'|'date'|'time';
 
 export type TableContent = {
-  headers: string[];
-  records: (string | number)[][];
+  cols: {
+    name: string;
+    type: ColType;
+  }[];
+  rows: string[][];
 };

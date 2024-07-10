@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-export default function Table(
+export default function InputTitle(
   {
     title,
     setTitle
@@ -11,7 +11,7 @@ export default function Table(
 ) {
   return (
     <div className="flex gap-2 items-center">
-      <label className="max-w-xs">
+      <label className="">
         Title:
       </label>
       <input
@@ -19,7 +19,7 @@ export default function Table(
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder={"タイトル"}
-        className="input input-bordered input-sm w-full max-w-xs"
+        className="w-1/2"
       />
     </div>
   );

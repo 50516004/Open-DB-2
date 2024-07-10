@@ -3,7 +3,9 @@ import {
   BeakerIcon,
   ChartBarSquareIcon,
   DocumentDuplicateIcon,
-  HomeIcon
+  HomeIcon,
+  PaperClipIcon,
+  PuzzlePieceIcon,
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -28,6 +30,14 @@ const links = [
     name: 'Blob Test',
     href: '/home/blob',
     icon: BeakerIcon
+  }, {
+    name: 'UI Test',
+    href: '/home/sandbox',
+    icon: PuzzlePieceIcon
+  }, {
+    name: 'CSV Test',
+    href: '/home/files',
+    icon: PaperClipIcon
   },
 ];
 

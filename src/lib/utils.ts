@@ -67,3 +67,11 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export function range(num: number) {
+  const array: number[] = [];
+  for (let index = 0; index < num; index++) {
+    array.push(index);
+  }
+  return array;
+}

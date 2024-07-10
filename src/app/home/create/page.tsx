@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import TableForm from "@/src/ui/tables/table-form";
+import TableForm from "@/src/ui/tables/form/table-form";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default async function Page() {
 
   return (
     <main>
-      <TableForm mail={email} />
+      <TableForm email={email} />
     </main>
   );
 
