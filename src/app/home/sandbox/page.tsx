@@ -1,5 +1,6 @@
 import DropDownDetails from "@/src/ui/sandbox/drop-down-details";
 import DropDownFocus from "@/src/ui/sandbox/drop-down-focus";
+import DropDownState from "@/src/ui/sandbox/drop-down-state";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export default function Page() {
     <main>
       <DropDownFocus />
       <DropDownDetails/>
+      <DropDownState />
     </main>
   );
 }

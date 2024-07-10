@@ -22,12 +22,6 @@ export default function Buttons(
       >
         Create Table
       </button>
-      <button
-        onClick={e => {}}
-        className="btn btn-secondary"
-      >
-        View Table
-      </button>
     </div>
   );
 }

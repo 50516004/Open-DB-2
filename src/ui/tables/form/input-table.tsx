@@ -45,8 +45,7 @@ export default function InputTable(
                 <InputRecords
                   row={i}
                   col={j}
-                  value={cell}
-                  type={cols[j].type}
+                  content={content}
                   updateContent={updateContent}
                 />
               </td>

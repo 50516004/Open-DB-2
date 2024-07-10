@@ -1,10 +1,10 @@
-import ViewTable from "@/src/ui/csv/view-table";
+import FileControl from "@/src/ui/csv/file-control";
 
 export default async function Page() {
 
   return (
     <div className="w-full">
-      <ViewTable/>
+      <FileControl/>
     </div>
   );
 }

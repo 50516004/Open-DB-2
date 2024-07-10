@@ -62,7 +62,6 @@ export default function DropDownCell(
       ref={detailsRef}
       onClick={(e) => {
         if (!onMenu) {
-          // e.preventDefault();
           close();
         }
       }}
@@ -79,8 +78,8 @@ export default function DropDownCell(
         {summary}
       </summary>
       <ul
-        onMouseEnter={e => setOnMenu(true)}
-        onMouseLeave={e => setOnMenu(false)}
+        onMouseEnter={() => setOnMenu(true)}
+        onMouseLeave={() => setOnMenu(false)}
         className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow-lg font-normal"
       >
         {toJSX(menu)}

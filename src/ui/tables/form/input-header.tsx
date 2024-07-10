@@ -58,7 +58,7 @@ export default function InputHeader(
           value={value}
           onChange={changeHeader}
           placeholder={"列" + (col + 1)}
-          className='w-full'
+          className=''
         />
       }
       menu={[

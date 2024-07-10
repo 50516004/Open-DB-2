@@ -101,10 +101,12 @@ export type TableInfoView = Omit<TableInfo, 'creator_id'> & {
 
 export type ColType = 'text'|'number'|'date'|'time';
 
+export type Col = {
+  name: string;
+  type: ColType;
+}
+
 export type TableContent = {
-  cols: {
-    name: string;
-    type: ColType;
-  }[];
+  cols: Col[];
   rows: string[][];
 };
