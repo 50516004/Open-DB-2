@@ -1,6 +1,5 @@
 import { download } from "@/src/lib/actions";
 import { fetchTableInfoById } from "@/src/lib/data";
-import { lusitana } from "@/src/ui/fonts";
 import DataTable from "@/src/ui/tables/view/data-table";
 
 type Params = {
@@ -16,10 +15,7 @@ export default async function Page(
 
   return (
     <main>
-      <div className="flex w-full items-center justify-between">
-        <h1 className={`${lusitana.className} text-2xl`}>{info.title}</h1>
-      </div>
-      <DataTable content={content} />
+      <DataTable title={info.title} content={content} />
     </main>
   );
 

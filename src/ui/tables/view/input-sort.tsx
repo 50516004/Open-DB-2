@@ -34,6 +34,7 @@ export default function InputSorts(
       {
         sorts.map((sort, idx) => (
           <InputSort
+            key={idx}
             cols={cols}
             index={idx}
             sort={sort}
@@ -44,7 +45,7 @@ export default function InputSorts(
       <div>
         <button
           onClick={addSort}
-          className="btn btn-primary"
+          className="btn btn-outline"
         >
           ソート追加
         </button>
@@ -62,18 +63,18 @@ const methods = ["降順", "昇順"];
  * @returns 
  */
 function comparator(id: number): Comparator<string> {
-  if(id == 0) {
+  if (id == 0) {
     return (s1, s2) => {
-      if(s1 > s2) return -1;
-      if(s1 < s2) return 1;
+      if (s1 > s2) return -1;
+      if (s1 < s2) return 1;
       return 0;
     }
   }
 
-  if(id == 1) {
+  if (id == 1) {
     return (s1, s2) => {
-      if(s1 < s2) return -1;
-      if(s1 > s2) return 1;
+      if (s1 < s2) return -1;
+      if (s1 > s2) return 1;
       return 0;
     }
   }
@@ -137,7 +138,7 @@ function InputSort(
         <option disabled selected>列を選択</option>
         {
           cols.map((col, i) => (
-            <option value={i}>{col.name}</option>
+            <option key={i} value={i}>{col.name}</option>
           ))
         }
       </select>
@@ -153,7 +154,7 @@ function InputSort(
       >
         {
           methods.map((method, i) => (
-            <option value={i}>{method}</option>
+            <option key={i} value={i}>{method}</option>
           ))
         }
       </select>

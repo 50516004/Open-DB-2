@@ -34,6 +34,7 @@ export default function InputFilters(
       {
         filters.map((filter, idx) => (
           <InputFilter
+            key={idx}
             index={idx}
             filter={filter}
             setFilters={setFilters}
@@ -44,7 +45,7 @@ export default function InputFilters(
       <div>
         <button
           onClick={addfilter}
-          className="btn btn-primary"
+          className="btn btn-outline"
         >
           フィルター追加
         </button>
@@ -120,7 +121,7 @@ function InputFilter(
         <option disabled selected>列を選択</option>
         {
           cols.map((col, i) => (
-            <option value={i}>{col.name}</option>
+            <option key={i} value={i}>{col.name}</option>
           ))
         }
       </select>
@@ -147,7 +148,7 @@ function InputFilter(
       >
         {
           methods.map((method, i) => (
-            <option value={i}>{method}</option>
+            <option key={i} value={i}>{method}</option>
           ))
         }
       </select>

@@ -17,13 +17,13 @@ export default function InputView(
     <div className="flex flex-col gap-2">
       <div className="w-max">
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-primary">
+          <div tabIndex={0} role="button" className="btn btn-outline">
             列の表示
           </div>
           <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow-lg">
             {
               cols.map((col, idx) => (
-                <li>
+                <li key={idx}>
                   <label className="label cursor-pointer">
                     <span className="label-text">{col.name}</span>
                     <input
