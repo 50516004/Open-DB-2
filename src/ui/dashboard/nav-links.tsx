@@ -1,11 +1,9 @@
 'use client';
 import {
   BeakerIcon,
-  ChartBarSquareIcon,
-  DocumentDuplicateIcon,
   HomeIcon,
   PaperClipIcon,
-  PuzzlePieceIcon,
+  PuzzlePieceIcon
 } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -18,14 +16,6 @@ const links = [
     name: 'Home',
     href: '/home',
     icon: HomeIcon
-  }, {
-    name: 'Dashboard',
-    href: '/dashboard',
-    icon: ChartBarSquareIcon
-  }, {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
-    icon: DocumentDuplicateIcon,
   }, {
     name: 'Blob Test',
     href: '/home/blob',

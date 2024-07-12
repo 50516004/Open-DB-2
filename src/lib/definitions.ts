@@ -86,6 +86,8 @@ export type InvoiceForm = {
 };
 
 // Open-DB
+
+/** テーブル情報 */
 export type TableInfo = {
   table_id: string;
   creator_id: string;
@@ -95,18 +97,43 @@ export type TableInfo = {
   content_url: string;
 };
 
+/** テーブル情報(表示用) */
 export type TableInfoView = Omit<TableInfo, 'creator_id'> & {
   name: string;
 };
 
+/** 列タイプ */
 export type ColType = 'text'|'number'|'date'|'time';
 
+/** 列 */
 export type Col = {
   name: string;
   type: ColType;
 }
 
+/** テーブルコンテンツ */
 export type TableContent = {
   cols: Col[];
   rows: string[][];
 };
+
+/** 評価関数 */
+export type Predicate<T> = (t:T) => boolean;
+
+/** 比較関数 */
+export type Comparator<T> = (o1:T, o2:T) => number;
+
+/** 評価方法 */
+export type FilterOperation = "equal" | "include";
+
+/** テーブルフィルター */
+export type TableFilter = {
+  colIndex: number | undefined;
+  predicate: Predicate<string>;
+}
+
+/** テーブルソート */
+export type TableSort = {
+  colIndex: number | undefined;
+  comparator: Comparator<string>;
+}
