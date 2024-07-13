@@ -1,4 +1,5 @@
 import { Col, Comparator, TableSort } from "@/src/lib/definitions";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Updater } from "use-immer";
 
@@ -19,7 +20,7 @@ export default function InputSorts(
   }
 ) {
 
-  /** フィルターを追加 */
+  /** ソートを追加 */
   function addSort() {
     setSorts(draft => {
       draft.push({
@@ -45,9 +46,8 @@ export default function InputSorts(
       <div>
         <button
           onClick={addSort}
-          className="btn btn-outline"
-        >
-          ソート追加
+          className="rounded-md border p-2 hover:bg-gray-100">
+          <PlusIcon className="w-5" />
         </button>
       </div>
     </div>

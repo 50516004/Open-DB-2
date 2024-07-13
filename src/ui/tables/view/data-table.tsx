@@ -65,18 +65,6 @@ export default function DataTable(
   ]
 
   const controls = [
-    <ul>
-      {
-        options.map((o, i) => (
-          <li>
-            <button onClick={e => setOpen(i+1)} className="flex items-center">
-              <span>{o}</span>
-              <ChevronRightIcon className="w-8" />
-            </button>
-          </li>
-        ))
-      }
-    </ul>,
     <InputFilters cols={cols} filters={filters} setFilters={setFilters} />,
     <InputSorts cols={cols} sorts={sorts} setSorts={setSorts} />,
     <InputView cols={cols} view={view} setView={setView} />,
@@ -101,20 +89,41 @@ export default function DataTable(
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-white text-base-content min-h-full w-1/2 p-4">
-            <div className="flex flex-col gap-2">
-              <div>
+          <div className="bg-white min-h-full min-w-96">
+            {
+              open == -1 &&
+              <ul className="menu text-base-content">
                 {
-                  open != 0 &&
-                  <button onClick={() => setOpen(0)} className="flex items-center gap-2">
-                    <ChevronLeftIcon className="w-8 inline" />
-                    <span className="text-lg">{options[open-1]}</span>
-                  </button>
+                  options.map((o, i) => (
+                    <li>
+                      <button
+                        onClick={() => setOpen(i)}
+                        className="flex items-center">
+                        <span>{o}</span>
+                        <ChevronRightIcon className="w-8" />
+                      </button>
+                    </li>
+                  ))
                 }
+              </ul>
+            }
+            {
+              open >= 0 &&
+              <div className="flex flex-col gap-2 p-2">
+                <div className="hover:bg-gray-200 duration-200 p-1 rounded-lg cursor-pointer">
+                  <button
+                    onClick={() => setOpen(-1)}
+                    className="flex items-center gap-2 w-full">
+                    <ChevronLeftIcon className="w-8 inline" />
+                    <span className="text-lg">{options[open]}</span>
+                  </button>
+                </div>
+                <div className="p-2">
+                  {controls[open]}
+                </div>
               </div>
-              {controls[open]}
-            </div>
-          </ul>
+            }
+          </div>
         </div>
       </div>
     </div>

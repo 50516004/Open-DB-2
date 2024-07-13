@@ -1,4 +1,5 @@
 import { Col, TableFilter } from "@/src/lib/definitions";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Updater } from "use-immer";
 
@@ -45,9 +46,9 @@ export default function InputFilters(
       <div>
         <button
           onClick={addfilter}
-          className="btn btn-outline"
+          className="rounded-md border p-2 hover:bg-gray-100"
         >
-          フィルター追加
+          <PlusIcon className="w-5" />
         </button>
       </div>
     </div>
