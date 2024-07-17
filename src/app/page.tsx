@@ -2,8 +2,11 @@ import AcmeLogo from '@/src/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
+
+  redirect("/tables/home");
 
   return (
     <main className="flex min-h-screen flex-col p-6">

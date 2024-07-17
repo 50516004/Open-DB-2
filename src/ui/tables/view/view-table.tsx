@@ -7,8 +7,8 @@ export default function ViewTable(
   const { cols, rows } = content;
 
   return (
-    <div className="overflow-x-auto">
-      <table className='table border-gray-600 rounded-lg overflow-hidden'>
+    <div className="w-full h-full overflow-x-scroll border">
+      <table className='min-w-full w-max table border-gray-600 rounded-lg overflow-hidden'>
         <thead>
           <tr className="bg-blue-400 text-white">
             {cols.map((col, i) => (

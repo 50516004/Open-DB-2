@@ -53,6 +53,7 @@ export default function InputRecords(
         draft.cols[i].name = cell;
       });
     });
+    removeRow();
   }
 
   return (

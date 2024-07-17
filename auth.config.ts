@@ -10,7 +10,7 @@ export const authConfig = {
       const onLoginPage = nextUrl.pathname.startsWith('/login');
 
       if (onLoginPage && isLoggedIn) {
-        return Response.redirect(new URL('/home', nextUrl));
+        return Response.redirect(new URL('/tables/home', nextUrl));
       }
 
       if (isLoggedIn) {

@@ -24,7 +24,7 @@ export default function InputFilters(
   function addfilter() {
     setFilters(draft => {
       draft.push({
-        colIndex: undefined,
+        colIndex: 0,
         predicate: (s) => true,
       });
     });
@@ -93,8 +93,8 @@ function InputFilter(
       draft[index].predicate = (cell) => {
         switch (methodId) {
           case 0: return cell.includes(criteria);
-          case 1: return cell < (criteria);
-          case 2: return cell > (criteria);
+          case 1: return parseFloat(cell) < parseFloat(criteria);
+          case 2: return parseFloat(cell) > parseFloat(criteria);
           default: return true;
         }
       };
@@ -110,16 +110,17 @@ function InputFilter(
 
   return (
     <div className="flex gap-2">
-      {/* 列の選択 */}
+      {/* 評価列の選択 */}
       <select
         value={filter.colIndex}
         onChange={e => {
           const input = parseInt(e.target.value);
+          console.log(input);
           selectCol(input);
         }}
         className="select select-bordered"
       >
-        <option disabled selected>列を選択</option>
+        <option disabled>列を選択</option>
         {
           cols.map((col, i) => (
             <option key={i} value={i}>{col.name}</option>

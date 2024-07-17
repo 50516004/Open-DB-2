@@ -29,7 +29,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="email"
             >
-              Email
+              メールアドレス
             </label>
             <div className="relative">
               <input
@@ -48,7 +48,7 @@ export default function LoginForm() {
               className="mb-3 mt-5 block text-xs font-medium text-gray-900"
               htmlFor="password"
             >
-              Password
+              パスワード
             </label>
             <div className="relative">
               <input
@@ -65,7 +65,7 @@ export default function LoginForm() {
           </div>
         </div>
         <Button className="mt-4 w-full" aria-disabled={isPending}>
-          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+          ログイン<ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div className="flex h-8 items-end space-x-1">
           {errorMessage && (

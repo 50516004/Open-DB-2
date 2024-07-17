@@ -32,7 +32,7 @@ export default function DataTable(
     ...content,
     rows: content.rows.filter(row => {
       for (const filter of filters) {
-        if (!filter.colIndex) continue;
+        if (filter.colIndex == undefined) continue;
         const value = row[filter.colIndex];
         if (!filter.predicate(value)) {
           return false;
@@ -71,19 +71,19 @@ export default function DataTable(
   ]
 
   return (
-    <div className="w-max text-gray-700 flex flex-col gap-2">
+    <div className="text-gray-700 flex flex-col gap-2">
       <div className="drawer drawer-end">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
+        <div className="drawer-content flex flex-col gap-2">
           <div className="flex w-full items-center justify-between">
             <h1 className={`${lusitana.className} text-2xl`}>
               {title}
             </h1>
             <label htmlFor="my-drawer-4" className="drawer-button rounded-md border p-2 hover:bg-gray-100 cursor-pointer">
-              <Bars3Icon className="w-6" />
+              <Bars3Icon className="w-6" onClick={() => setOpen(-1)}/>
             </label>
           </div>
-          <div className="mt-2">
+          <div className="">
             <ViewTable content={forView} />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function DataTable(
               <ul className="menu text-base-content">
                 {
                   options.map((o, i) => (
-                    <li>
+                    <li key={i}>
                       <button
                         onClick={() => setOpen(i)}
                         className="flex items-center">

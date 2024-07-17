@@ -7,6 +7,7 @@ import { ChangeEvent, useState } from "react";
 import { useImmer } from "use-immer";
 import InputTable from "./input-table";
 import InputTitle from "./input-title";
+import InputCSV from "./upload-csv";
 
 const initialContent: TableContent = {
   cols: [
@@ -52,7 +53,7 @@ export default function TableForm(
       if (typeof result === "string") {
 
         const rows = parseCSV(result);
-        if(canUse(rows)) {
+        if (canUse(rows)) {
           const len = rows[0].length;
           updateContent(draft => {
             draft.cols = makeCols(len);
@@ -68,10 +69,8 @@ export default function TableForm(
 
   return (
     <div className="flex flex-col gap-4">
-      <input
-        type="file"
-        onChange={readFile}
-        className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+      <InputCSV
+        updateContent={updateContent}
       />
       <InputTitle
         title={title}
@@ -84,7 +83,6 @@ export default function TableForm(
         />
       </div>
       <Buttons onPost={post} />
-      {/* <p>{JSON.stringify(content)}</p> */}
     </div>
   );
 };
@@ -96,7 +94,7 @@ function parseCSV(text: string) {
 }
 
 function canUse(array: string[][]) {
-  if(!array || array.length == 0) {
+  if (!array || array.length == 0) {
     return false;
   }
   const n = array[0].length;
