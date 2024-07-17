@@ -3,6 +3,7 @@ import { TableInfoView } from "@/src/lib/definitions";
 import { formatDateToLocal } from "@/src/lib/utils";
 import { DeleteTable, ViewTable } from "@/src/ui/tables/home-buttons";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: 'ホーム',
@@ -29,16 +30,16 @@ function TableList(
         <thead className="rounded-lg text-sm font-normal">
           <tr>
             <th scope="col" className="px-3 py-5 font-medium">
-              Title
+              タイトル
             </th>
             <th scope="col" className="px-3 py-5 font-medium">
-              Creator
+              作成者
             </th>
             <th scope="col" className="px-3 py-5 font-medium">
-              Updated
+              更新日
             </th>
             <th scope="col" className="px-3 py-5 font-medium">
-              View
+              閲覧数
             </th>
             <th scope="col" className="px-3 py-5 font-medium">
 
@@ -51,8 +52,13 @@ function TableList(
               key={table.table_id}
               className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
             >
-              <td className="px-3 py-3">
-                {table.title}
+              <td className="">
+                <Link
+                  href={`/tables/view/${table.table_id}`}
+                  className="link hover:text-blue-400"
+                >
+                  <span>{table.title}</span>
+                </Link>
               </td>
               <td className="whitespace-nowrap px-3 py-3">
                 {table.name}

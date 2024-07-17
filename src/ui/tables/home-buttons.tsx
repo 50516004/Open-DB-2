@@ -1,6 +1,6 @@
 import { signOut } from "@/auth";
 import { deleteTable, removeTable } from "@/src/lib/actions";
-import { ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, PlusIcon, TrashIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export function ViewTable({ id }: { id: string }) {
@@ -48,16 +48,35 @@ export function CreateTable() {
   );
 }
 
+export function Login() {
+  return (
+    <Link
+      href="/login"
+      className="btn bg-blue-400 text-white hover:bg-orange-300"
+    >
+      <UserCircleIcon className="h-6" />
+      <span className="hidden md:block">
+        ログイン
+      </span>
+    </Link>
+  );
+}
+
 export function Logout() {
+
+  const action = async () => {
+    'use server';
+    await signOut();
+  }
+  
   return (
     <form
-      action={async () => {
-        'use server';
-        await signOut();
-      }}>
+      action={action}>
       <button className="btn btn-outline">
         <ArrowRightStartOnRectangleIcon className="w-5" />
-        <span>ログアウト</span>
+        <span className="hidden md:block">
+          ログアウト
+        </span>
       </button>
     </form>
   );

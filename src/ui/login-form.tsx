@@ -1,7 +1,6 @@
 'use client';
 
 import { authenticate } from '@/src/lib/actions';
-import { lusitana } from '@/src/ui/fonts';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import {
   AtSymbolIcon,
@@ -19,10 +18,7 @@ export default function LoginForm() {
 
   return (
     <form action={formAction} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
-        </h1>
+      <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-4">
         <div className="w-full">
           <div>
             <label

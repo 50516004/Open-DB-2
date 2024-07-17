@@ -1,10 +1,10 @@
-import NavLinks from '@/src/ui/dashboard/nav-links';
 import {
   Cog6ToothIcon,
   HomeIcon,
   QueueListIcon,
   StarIcon
 } from '@heroicons/react/24/outline';
+import NavLinks from './nav-links';
 
 const links = [
   {
