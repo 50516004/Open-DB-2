@@ -1,19 +1,15 @@
 import { auth } from "@/auth";
 import TableForm from "@/src/ui/tables/form/table-form";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: 'Create Table',
+  title: 'テーブル作成',
 };
 
 export default async function Page() {
   const session = await auth();
 
-  const email = session?.user?.email;
-  if (!email) {
-    redirect("/home");
-  }
+  const email = session?.user?.email ?? "user@nextmail.com";
 
   return (
     <main>

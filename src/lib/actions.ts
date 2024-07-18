@@ -3,7 +3,7 @@
 import { signIn } from '@/auth';
 import { del, put } from '@vercel/blob';
 import { sql } from '@vercel/postgres';
-import { AuthError } from 'next-auth';
+import { AuthError, User } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -201,8 +201,8 @@ export async function deleteTable(url: string) {
  * @returns 
  */
 export async function createTable(
-  email: string, 
-  title: string, 
+  email: string,
+  title: string,
   url: string
 ) {
 
@@ -221,8 +221,8 @@ export async function createTable(
   }
 
   // Revalidate the cache for the invoices page and redirect the user.
-  revalidatePath('/home');
-  redirect('/home');
+  revalidatePath('/tables/home');
+  redirect('/tables/home');
 }
 
 /**
@@ -235,10 +235,41 @@ export async function removeTable(id: string) {
     await sql`DELETE FROM tables WHERE table_id = ${id}`;
 
     // Revalidate the cache
-    revalidatePath('/home');
+    revalidatePath('/tables/home');
 
     return { message: 'Deleted Table.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Table.' };
+  }
+}
+
+/**
+ * ユーザ情報取得
+ * @param email 
+ * @returns 
+ */
+export async function getUser(email: string, name: string) {
+  try {
+    const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
+    return user.rows[0];
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Failed to fetch user.');
+  }
+}
+
+/**
+ * ユーザ名変更
+ */
+export async function updateUserName(name: string, email: string) {
+  try {
+    await sql`
+      UPDATE users
+      SET name = ${name}
+      WHERE email = ${email}
+    `;
+  } catch (error) {
+    console.error('Failed to update user:', error);
+    throw new Error('Failed to update user.');
   }
 }

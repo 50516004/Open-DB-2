@@ -25,7 +25,7 @@ export default async function TopNav() {
         />
       </div>
       <div className="navbar-end flex gap-2 items-center">
-        {session && <CreateTable />}
+        <CreateTable />
         {session? <Logout /> : <Login />}
       </div>
     </div >

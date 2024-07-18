@@ -21,7 +21,7 @@ const links = [
     icon: <QueueListIcon className='w-6'/>
   }, {
     name: '設定',
-    href: '/tables/sandbox',
+    href: '/tables/setting',
     icon: <Cog6ToothIcon className='w-6'/>
   },
 ];

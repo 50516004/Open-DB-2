@@ -10,6 +10,7 @@ export const authConfig = {
       const onLoginPage = nextUrl.pathname.startsWith('/login');
       const onHomePage = nextUrl.pathname.startsWith('/tables/home');
       const onViewPage = nextUrl.pathname.startsWith('/tables/view');
+      const onCreatePage = nextUrl.pathname.startsWith('/tables/create');
       const onRootPage = nextUrl.pathname == "/";
 
       // ログイン状態かつログインページならリダイレクト
@@ -21,8 +22,8 @@ export const authConfig = {
       if (isLoggedIn) {
         return true;
       }
-      // ホーム、ビュー、ルートページはアクセス許可
-      if (onHomePage || onViewPage || onRootPage) {
+      // ホーム、ビュー、作成、ルートページはアクセス許可
+      if (onHomePage || onViewPage || onCreatePage || onRootPage) {
         return true;
       }
 
