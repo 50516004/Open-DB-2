@@ -1,5 +1,17 @@
-## Next.js App Router Course - Starter
+## 概要
+テーブルデータ(表形式のデータ)を作成、公開できるWebサービスです。  
+プロダクトはVercel上で動かしています。  
+[https://open-db-2.vercel.app](https://open-db-2.vercel.app)
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
-
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+## 使用技術
+### フレームワーク
+- Next.js
+### フロントエンド
+- TypeScript
+- React.js
+### スタイリング
+- Tailwind CSS
+- daisyUI
+### バックエンド
+- Vercel Postgres Database
+- Vercel Blob Store
