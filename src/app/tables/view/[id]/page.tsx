@@ -1,6 +1,6 @@
 import { download } from "@/src/lib/actions";
 import { fetchTableInfoById } from "@/src/lib/data";
-import DataTable from "@/src/ui/tables/view/data-table";
+import DataTable from "@/src/ui/tables/view/reactive/reactive-table";
 
 type Params = {
   id: string;
@@ -15,7 +15,8 @@ export default async function Page(
 
   return (
     <main>
-      <DataTable title={info.title} content={content} />
+      <h1 className="text-xl mb-2">{info.title}</h1>
+      <DataTable content={content} />
     </main>
   );
 

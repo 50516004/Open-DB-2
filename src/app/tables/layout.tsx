@@ -11,7 +11,7 @@ export default function Layout(
         <div className="hidden md:block md:min-w-52 shadow-md">
           <SideNav />
         </div>
-        <div className="grow overflow-y-scroll p-10">
+        <div className="grow overflow-y-scroll px-10 py-5">
           {children}
         </div>
       </div>

@@ -1,5 +1,4 @@
 import { Col, TableFilter } from "@/src/lib/definitions";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Updater } from "use-immer";
 
@@ -30,6 +29,12 @@ export default function InputFilters(
     });
   }
 
+  function removeAllfilter() {
+    setFilters(draft => {
+      draft.splice(0);
+    });
+  }
+
   return (
     <div className="flex flex-col gap-2">
       {
@@ -43,13 +48,18 @@ export default function InputFilters(
           />
         ))
       }
-      <div>
+      <div className="flex gap-2">
         <button
           onClick={addfilter}
-          className="rounded-md border p-2 hover:bg-gray-100"
-        >
-          <PlusIcon className="w-5" />
-        </button>
+          className="btn"
+        >フィルターを追加</button>
+        {
+          filters.length > 0 &&
+          <button
+            onClick={removeAllfilter}
+            className="btn"
+          > すべて削除</button>
+        }
       </div>
     </div>
   );
@@ -109,7 +119,7 @@ function InputFilter(
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-1 items-center">
       {/* 評価列の選択 */}
       <select
         value={filter.colIndex}
@@ -118,9 +128,8 @@ function InputFilter(
           console.log(input);
           selectCol(input);
         }}
-        className="select select-bordered"
+        className="select select-bordered select-sm text-xs focus:outline-offset-0 focus:outline-sky-300"
       >
-        <option disabled>列を選択</option>
         {
           cols.map((col, i) => (
             <option key={i} value={i}>{col.name}</option>
@@ -136,7 +145,7 @@ function InputFilter(
           setCriteria(input);
           setPredicate(input, methodId);
         }}
-        className="input input-bordered"
+        className="input input-bordered input-sm focus:outline-offset-0 focus:outline-sky-300"
       />
       {/* 評価手法の入力 */}
       <select
@@ -146,7 +155,7 @@ function InputFilter(
           setMethodId(input);
           setPredicate(criteria, input);
         }}
-        className="select select-bordered"
+        className="select select-bordered select-sm text-xs focus:outline-offset-0 focus:outline-sky-300"
       >
         {
           methods.map((method, i) => (
@@ -157,7 +166,7 @@ function InputFilter(
       {/* 削除ボタン */}
       <button
         onClick={removeFilter}
-        className="btn btn-secondary btn-outline">
+        className="btn btn-secondary btn-outline btn-sm">
         削除
       </button>
     </div>
