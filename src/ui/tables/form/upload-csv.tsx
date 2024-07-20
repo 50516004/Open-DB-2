@@ -39,12 +39,18 @@ export default function InputCSV(
   }
 
   return (
-    <input
-      type="file"
-      accept=".csv"
-      onChange={e => readFile(e.target.files)}
-      className="file-input file-input-bordered file-input-primary max-w-md"
-    />
+    <div>
+      <label className="label-text">
+        CSVインポート:
+      </label>
+      {" "}
+      <input
+        type="file"
+        accept=".csv"
+        onChange={e => readFile(e.target.files)}
+        className="file-input file-input-bordered file-input-accent file-input-sm max-w-xs focus:outline-offset-0"
+      />
+    </div>
   );
 };
 

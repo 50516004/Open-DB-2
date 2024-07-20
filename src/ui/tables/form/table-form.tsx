@@ -59,11 +59,11 @@ export default function TableForm(
         <Link
           href="/tables/home"
           className="btn"
-        >Cancel</Link>
+        >キャンセル</Link>
         <button
           onClick={post}
           className="btn btn-primary"
-        >Create Table</button>
+        >作成</button>
       </div>
     </div>
   );

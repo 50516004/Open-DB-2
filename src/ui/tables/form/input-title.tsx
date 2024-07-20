@@ -10,16 +10,17 @@ export default function InputTitle(
   }
 ) {
   return (
-    <div className="flex gap-2 items-center">
-      <label className="">
-        Title:
+    <div>
+      <label className="label-text">
+        タイトル:
       </label>
+      {" "}
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder={"タイトル"}
-        className="w-1/2"
+        className="w-96 rounded-md"
       />
     </div>
   );

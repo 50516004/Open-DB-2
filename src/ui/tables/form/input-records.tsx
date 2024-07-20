@@ -1,6 +1,5 @@
 import { TableContent } from "@/src/lib/definitions";
 import { range } from "@/src/lib/utils";
-import { ChangeEvent } from "react";
 import { Updater } from "use-immer";
 import DropDownCell from "./drop-down-cell";
 
@@ -22,9 +21,9 @@ export default function InputRecords(
   const value = content.rows[row][col];
 
   /** レコード更新 */
-  function changeRecords(e: ChangeEvent<HTMLInputElement>) {
+  function changeRecords(text: string) {
     updateContent(draft => {
-      draft.rows[row][col] = e.target.value;
+      draft.rows[row][col] = text;
     });
   }
 
@@ -62,9 +61,9 @@ export default function InputRecords(
         <input
           type={type}
           value={value}
-          onChange={changeRecords}
+          onChange={e => changeRecords(e.target.value)}
           placeholder={type}
-          className='w-full'
+          className='w-full rounded-md'
         />
       }
       menu={[
