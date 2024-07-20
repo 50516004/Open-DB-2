@@ -86,7 +86,7 @@ export default function DataTable(
                     value={col.name}
                     sort={sort}
                     setSorts={setSorts}
-                    className="cursor-pointer hover:bg-base-300 duration-150 sticky top-0 z-10" />
+                    className="cursor-pointer hover:bg-base-300 duration-150" />
                 ))}
               </tr>
             </thead>
