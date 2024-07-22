@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import TableForm from "@/src/ui/tables/form/form-table";
+import TableForm from "@/src/ui/tables/create/form-table";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
