@@ -6,47 +6,47 @@ import DropDownCell from "./drop-down-cell";
 /** レコード入力欄 */
 export default function InputRecords(
   {
-    row,
-    col,
+    rowIdx,
+    colIdx,
     content,
     updateContent,
   }: {
-    row: number;
-    col: number;
+    rowIdx: number;
+    colIdx: number;
     content: TableContent;
     updateContent: Updater<TableContent>;
   }
 ) {
-  const type = content.cols[col].type;
-  const value = content.rows[row][col];
+  const type = content.cols[colIdx].type;
+  const value = content.rows[rowIdx][colIdx];
 
   /** レコード更新 */
   function changeRecords(text: string) {
     updateContent(draft => {
-      draft.rows[row][col] = text;
+      draft.rows[rowIdx][colIdx] = text;
     });
   }
 
   /** 下に行を追加 */
   function addRow() {
     const len = content.cols.length;
-    const newRow = range(len).map(i => "");
+    const newRow = range(len).map(() => "");
 
     updateContent(draft => {
-      draft.rows.splice(row + 1, 0, newRow);
+      draft.rows.splice(rowIdx + 1, 0, newRow);
     });
   }
 
   /** 行を削除 */
   function removeRow() {
     updateContent(draft => {
-      draft.rows.splice(row, 1);
+      draft.rows.splice(rowIdx, 1);
     });
   }
 
   /** この行を列名に */
   function inputHeader() {
-    const rec = content.rows[row];
+    const rec = content.rows[rowIdx];
     updateContent(draft => {
       rec.forEach((cell, i) => {
         draft.cols[i].name = cell;

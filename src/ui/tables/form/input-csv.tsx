@@ -3,6 +3,11 @@
 import { Col, TableContent } from "@/src/lib/definitions";
 import { Updater } from "use-immer";
 
+/**
+ * CSVファイル入力コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function InputCSV(
   {
     updateContent,
@@ -11,9 +16,9 @@ export default function InputCSV(
   }
 ) {
 
-  /** CSVアップロード */
+  /** CSV読み込み */
   function readFile(fileList: FileList | null) {
-    if (!fileList) {
+    if (!fileList || fileList.length == 0) {
       return;
     }
     const file = fileList[0];
@@ -30,7 +35,11 @@ export default function InputCSV(
             draft.cols = makeCols(len);
             draft.rows = rows;
           });
+        } else {
+          alert("列の数が揃っていません。");
         }
+      } else {
+        alert("インポートできるのはCSVファイルのみです。");
       }
     }
 

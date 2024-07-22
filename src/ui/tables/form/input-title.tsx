@@ -1,5 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 
+/**
+ * テーブルタイトル入力コンポーネント
+ * @param param0 
+ * @returns 
+ */
 export default function InputTitle(
   {
     title,

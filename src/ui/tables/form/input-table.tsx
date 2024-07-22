@@ -1,9 +1,9 @@
 import { TableContent } from "@/src/lib/definitions";
 import { Updater } from "use-immer";
-import InputHeader from "./input-header";
-import InputRecords from "./input-records";
+import InputRecords from "./table-cell/table-data";
+import InputHeader from "./table-cell/table-header";
 
-/** テーブルフォーム */
+/** テーブル内容入力コンポーネント */
 export default function InputTable(
   {
     content,
@@ -26,7 +26,7 @@ export default function InputTable(
           {cols.map((col, i) => (
             <th key={i}>
               <InputHeader
-                col={i}
+                colIdx={i}
                 value={col.name}
                 updateContent={updateContent}
               />
@@ -43,8 +43,8 @@ export default function InputTable(
             {record.map((cell, j) => (
               <td key={j}>
                 <InputRecords
-                  row={i}
-                  col={j}
+                  rowIdx={i}
+                  colIdx={j}
                   content={content}
                   updateContent={updateContent}
                 />

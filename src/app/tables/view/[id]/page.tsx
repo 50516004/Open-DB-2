@@ -1,6 +1,6 @@
 import { download } from "@/src/lib/actions";
 import { fetchTableInfoById } from "@/src/lib/data";
-import DataTable from "@/src/ui/tables/view/reactive-table";
+import DataTable from "@/src/ui/tables/view/table";
 
 type Params = {
   id: string;

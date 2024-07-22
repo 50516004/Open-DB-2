@@ -4,7 +4,7 @@ import { TableContent, TableFilter, TableSort } from "@/src/lib/definitions";
 import InputFilters from "@/src/ui/tables/view/input-filter";
 import { useImmer } from "use-immer";
 import InputViewButton from "./input-view-button";
-import Header from "./reactive-header";
+import Header from "./view-header";
 
 export default function DataTable(
   {
@@ -25,7 +25,7 @@ export default function DataTable(
   function reset() {
     setFilters(draft => draft = []);
     setSorts(draft => draft.colIndex = undefined);
-    setView(draft => draft = content.cols.map(c => true));
+    setView(draft => draft = content.cols.map(() => true));
   }
 
   // フィルター適用

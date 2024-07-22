@@ -5,10 +5,11 @@ import { TableContent } from "@/src/lib/definitions";
 import Link from "next/link";
 import { useState } from "react";
 import { useImmer } from "use-immer";
+import InputCSV from "./input-csv";
 import InputTable from "./input-table";
 import InputTitle from "./input-title";
-import InputCSV from "./upload-csv";
 
+/** テーブル初期値 */
 const initialContent: TableContent = {
   cols: [
     { name: "", type: "text" },
@@ -22,13 +23,18 @@ const initialContent: TableContent = {
   ]
 };
 
+/**
+ * テーブル作成フォーム
+ * @param param0 
+ * @returns 
+ */
 export default function TableForm(
   { email }: { email: string }
 ) {
   const [title, setTitle] = useState("");
   const [content, updateContent] = useImmer(initialContent);
 
-  /** テーブル作成 */
+  /** アップロード */
   async function post() {
     // テーブルファイル作成
     const url = await upload(content);
@@ -63,7 +69,7 @@ export default function TableForm(
         <button
           onClick={post}
           className="btn btn-primary"
-        >作成</button>
+        >テーブル作成</button>
       </div>
     </div>
   );

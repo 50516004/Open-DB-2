@@ -1,34 +1,33 @@
 import { ColType, TableContent } from "@/src/lib/definitions";
-import { ChangeEvent } from "react";
 import { Updater } from "use-immer";
 import DropDownCell from "./drop-down-cell";
 
-/** ヘッダー入力欄 */
+/** ヘッダー入力 */
 export default function InputHeader(
   {
-    col,
+    colIdx,
     value,
     updateContent,
   }: {
-    col: number;
+    colIdx: number;
     value: string;
     updateContent: Updater<TableContent>;
   }
 ) {
 
   /** ヘッダー更新 */
-  function changeHeader(e: ChangeEvent<HTMLInputElement>) {
+  function changeHeader(text: string) {
     updateContent(draft => {
-      draft.cols[col].name = e.target.value;
+      draft.cols[colIdx].name = text;
     });
   }
 
   /** 右に列を追加 */
   function addColToRight() {
     updateContent(draft => {
-      draft.cols.splice(col + 1, 0, { name: "", type: "text" });
+      draft.cols.splice(colIdx + 1, 0, { name: "", type: "text" });
       draft.rows.forEach(row => {
-        row.splice(col + 1, 0, "");
+        row.splice(colIdx + 1, 0, "");
       });
     });
   }
@@ -36,9 +35,9 @@ export default function InputHeader(
   /** 列を削除 */
   function removeCol() {
     updateContent(draft => {
-      draft.cols.splice(col, 1);
+      draft.cols.splice(colIdx, 1);
       draft.rows.forEach(row => {
-        row.splice(col, 1);
+        row.splice(colIdx, 1);
       });
     });
   }
@@ -46,7 +45,7 @@ export default function InputHeader(
   /** 列の型を変更 */
   function changeMode(type: ColType) {
     updateContent(draft => {
-      draft.cols[col].type = type;
+      draft.cols[colIdx].type = type;
     });
   }
 
@@ -57,8 +56,8 @@ export default function InputHeader(
           <input
             type="text"
             value={value}
-            onChange={changeHeader}
-            placeholder={"列" + (col + 1)}
+            onChange={e => changeHeader(e.target.value)}
+            placeholder={"列" + (colIdx + 1)}
             className='rounded-md'
           />
         }
