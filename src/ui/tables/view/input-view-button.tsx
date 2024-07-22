@@ -16,7 +16,7 @@ export default function InputViewButton(
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
       <div tabIndex={0} role="button" className="btn">表示列</div>
-      <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+      <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] shadow-lg w-max max-w-96 p-2">
         {
           cols.map((col, idx) => (
             <li key={idx}>

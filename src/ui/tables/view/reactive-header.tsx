@@ -28,7 +28,7 @@ function comparator(id: number): Comparator<string> {
   return (s1, s2) => 0;
 }
 
-export default function ReactiveHeader(
+export default function Header(
   {
     col,
     value,

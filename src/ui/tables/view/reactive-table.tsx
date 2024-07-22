@@ -4,7 +4,7 @@ import { TableContent, TableFilter, TableSort } from "@/src/lib/definitions";
 import InputFilters from "@/src/ui/tables/view/input-filter";
 import { useImmer } from "use-immer";
 import InputViewButton from "./input-view-button";
-import ReactiveHeader from "./reactive-header";
+import Header from "./reactive-header";
 
 export default function DataTable(
   {
@@ -14,19 +14,18 @@ export default function DataTable(
   }
 ) {
 
-  const { cols } = content;
   const [filters, setFilters] = useImmer<TableFilter[]>([]);
   const [sort, setSorts] = useImmer<TableSort>({
     colIndex: undefined,
     comparator: (s1, s2) => 0,
   });
-  const [view, setView] = useImmer(cols.map(c => true));
+  const [view, setView] = useImmer(content.cols.map(c => true));
 
   // リセットボタン
   function reset() {
     setFilters(draft => draft = []);
     setSorts(draft => draft.colIndex = undefined);
-    setView(draft => draft = cols.map(c => true));
+    setView(draft => draft = content.cols.map(c => true));
   }
 
   // フィルター適用
@@ -58,15 +57,17 @@ export default function DataTable(
     });
   }
 
+  const {cols, rows} = forView;
+
   return (
     <div className="text-gray-700 flex flex-col gap-2">
       <div className="flex justify-between">
         <div>
-          <InputFilters cols={cols} filters={filters} setFilters={setFilters} />
+          <InputFilters cols={content.cols} filters={filters} setFilters={setFilters} />
         </div>
         <div className="flex flex-col justify-end">
           <div className="flex gap-2">
-            <InputViewButton cols={cols} view={view} setView={setView} />
+            <InputViewButton cols={content.cols} view={view} setView={setView} />
             <button
               onClick={reset}
               className="btn"
@@ -79,8 +80,8 @@ export default function DataTable(
           <table className='min-w-full w-max text-gray-900 table rounded-lg '>
             <thead className="rounded-lg text-sm font-normal">
               <tr>
-                {forView.cols.map((col, i) => (
-                  <ReactiveHeader
+                {cols.map((col, i) => (
+                  <Header
                     key={i}
                     col={i}
                     value={col.name}
@@ -91,7 +92,7 @@ export default function DataTable(
               </tr>
             </thead>
             <tbody className="bg-white">
-              {forView.rows.map((row, i) => (
+              {rows.map((row, i) => (
                 <tr
                   key={i}
                   className="hover:bg-blue-100 duration-0"
