@@ -1,3 +1,4 @@
+import { auth, getUser } from '@/auth';
 import { sql } from '@vercel/postgres';
 import {
   CustomerField,
@@ -245,7 +246,8 @@ export async function fetchTableInfoById(id: string) {
   try {
     const data = await sql<TableInfoView>`
       SELECT
-        tables.table_id, 
+        tables.table_id,
+        tables.creator_id,
         users.name, 
         tables.title, 
         tables.updated_at, 
@@ -261,4 +263,21 @@ export async function fetchTableInfoById(id: string) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch table.');
   }
+}
+
+export async function validate(info: TableInfoView) {
+  // セッション情報からメールアドレスを取得
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) {
+    return false;
+  }
+
+  // メールアドレスからユーザ情報を取得
+  const user = await getUser(email);
+  if (!user) {
+    return false;
+  }
+
+  return info.creator_id == user.id;
 }

@@ -1,6 +1,7 @@
 import { signOut } from "@/auth";
 import { deleteTable, removeTable } from "@/src/lib/actions";
-import { ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, PlusIcon, TrashIcon, UserCircleIcon } from "@heroicons/react/24/outline";
+import { TableInfoView } from "@/src/lib/definitions";
+import { ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, PencilIcon, PlusIcon, TrashIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 export function ViewTable({ id }: { id: string }) {
@@ -14,14 +15,25 @@ export function ViewTable({ id }: { id: string }) {
   );
 }
 
+export function UpdateTable({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/tables/update/${id}`}
+      className="rounded-md border p-2 hover:bg-gray-100"
+    >
+      <PencilIcon className="w-5" />
+    </Link>
+  );
+}
+
 export function DeleteTable(
-  { id, url }: { id: string, url: string }
+  { tableInfo }: { tableInfo: TableInfoView }
 ) {
 
   async function action() {
     'use server'
-    await deleteTable(url);
-    await removeTable(id);
+    await deleteTable(tableInfo.content_url);
+    await removeTable(tableInfo.table_id);
   }
 
   return (

@@ -226,6 +226,33 @@ export async function createTable(
 }
 
 /**
+ * テーブル名編集
+ */
+export async function editTable(
+  id: string,
+  title: string,
+) {
+
+  // Insert data into the database
+  try {
+    await sql`
+      UPDATE tables
+      SET title = ${title}
+      WHERE table_id = ${id}
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: Failed to Create Invoice.',
+    };
+  }
+
+  // Revalidate the cache for the invoices page and redirect the user.
+  revalidatePath('/tables/home');
+  redirect('/tables/home');
+}
+
+/**
  * テーブル情報削除
  * @param id 
  * @returns 
@@ -233,14 +260,11 @@ export async function createTable(
 export async function removeTable(id: string) {
   try {
     await sql`DELETE FROM tables WHERE table_id = ${id}`;
-
-    // Revalidate the cache
-    revalidatePath('/tables/home');
-
-    return { message: 'Deleted Table.' };
   } catch (error) {
     return { message: 'Database Error: Failed to Delete Table.' };
   }
+  revalidatePath('/tables/home');
+  redirect('/tables/home');
 }
 
 /**

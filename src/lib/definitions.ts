@@ -98,7 +98,7 @@ export type TableInfo = {
 };
 
 /** テーブル情報(表示用) */
-export type TableInfoView = Omit<TableInfo, 'creator_id'> & {
+export type TableInfoView = TableInfo & {
   name: string;
 };
 

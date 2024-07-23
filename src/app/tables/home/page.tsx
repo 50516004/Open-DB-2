@@ -1,7 +1,7 @@
 import { fetchTableInfos } from "@/src/lib/data";
 import { TableInfoView } from "@/src/lib/definitions";
 import { formatDateToLocal } from "@/src/lib/utils";
-import { DeleteTable, ViewTable } from "@/src/ui/tables/home-buttons";
+import { ViewTable } from "@/src/ui/tables/home-buttons";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -73,10 +73,6 @@ function TableList(
                 <div className="flex gap-3">
                   <ViewTable
                     id={table.table_id}
-                  />
-                  <DeleteTable
-                    id={table.table_id}
-                    url={table.content_url}
                   />
                 </div>
               </td>
