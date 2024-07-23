@@ -68,8 +68,8 @@ export default function TableForm(
         >キャンセル</Link>
         <button
           onClick={post}
-          className="btn btn-primary"
-        >テーブル作成</button>
+          className="btn bg-blue-400 text-white hover:bg-orange-300"
+        >アップロード</button>
       </div>
     </div>
   );

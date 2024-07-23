@@ -111,10 +111,13 @@ export type Col = {
   type: ColType;
 }
 
+/** 行 */
+export type Row = string[];
+
 /** テーブルコンテンツ */
 export type TableContent = {
   cols: Col[];
-  rows: string[][];
+  rows: Row[];
 };
 
 /** 評価関数 */
@@ -123,17 +126,15 @@ export type Predicate<T> = (t:T) => boolean;
 /** 比較関数 */
 export type Comparator<T> = (o1:T, o2:T) => number;
 
-/** 評価方法 */
-export type FilterOperation = "equal" | "include";
-
 /** テーブルフィルター */
 export type TableFilter = {
-  colIndex: number | undefined;
+  colIdx: number;
   predicate: Predicate<string>;
 }
 
 /** テーブルソート */
 export type TableSort = {
-  colIndex: number | undefined;
-  comparator: Comparator<string>;
+  colIdx: number | undefined;
+  comparator: Comparator<Row>;
+  reverse: boolean;
 }

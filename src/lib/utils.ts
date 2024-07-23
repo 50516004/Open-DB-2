@@ -68,6 +68,13 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
   ];
 };
 
+// Open-DB
+
+/**
+ * 整数列作成
+ * @param num 
+ * @returns 
+ */
 export function range(num: number) {
   const array: number[] = [];
   for (let index = 0; index < num; index++) {
@@ -75,3 +82,4 @@ export function range(num: number) {
   }
   return array;
 }
+

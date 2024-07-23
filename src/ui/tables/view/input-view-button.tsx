@@ -1,7 +1,7 @@
 import { Col } from "@/src/lib/definitions";
 import { Updater } from "use-immer";
 
-export default function InputViewButton(
+export default function InputView(
   {
     cols,
     view,
@@ -12,11 +12,22 @@ export default function InputViewButton(
     setView: Updater<boolean[]>;
   }
 ) {
+  const checkAny = view.some(b => b);
+
+  /** 全ての列を変更 */
+  function changeAll(view: boolean) {
+    setView(draft => draft = draft.map(() => view));
+  }
 
   return (
     <div className="dropdown dropdown-bottom dropdown-end">
       <div tabIndex={0} role="button" className="btn">表示列</div>
       <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] shadow-lg w-max max-w-96 p-2">
+        <li>
+          <button onClick={() => changeAll(!checkAny)}>
+            {checkAny ? "すべて非表示" : "すべて表示"}
+          </button>
+        </li>
         {
           cols.map((col, idx) => (
             <li key={idx}>

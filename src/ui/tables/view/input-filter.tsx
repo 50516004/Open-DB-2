@@ -23,12 +23,13 @@ export default function InputFilters(
   function addfilter() {
     setFilters(draft => {
       draft.push({
-        colIndex: 0,
+        colIdx: 0,
         predicate: (s) => true,
       });
     });
   }
 
+  /** フィルターをすべて削除 */
   function removeAllfilter() {
     setFilters(draft => {
       draft.splice(0);
@@ -51,14 +52,16 @@ export default function InputFilters(
       <div className="flex gap-2">
         <button
           onClick={addfilter}
-          className="btn"
-        >フィルターを追加</button>
+          className="btn">
+          フィルターを追加
+        </button>
         {
           filters.length > 0 &&
           <button
             onClick={removeAllfilter}
-            className="btn"
-          > すべて削除</button>
+            className="btn">
+            すべて削除
+          </button>
         }
       </div>
     </div>
@@ -93,7 +96,7 @@ function InputFilter(
   /** 評価列を選択 */
   function selectCol(select: number) {
     setFilters(draft => {
-      draft[index].colIndex = select;
+      draft[index].colIdx = select;
     });
   }
 
@@ -122,7 +125,7 @@ function InputFilter(
     <div className="flex gap-1 items-center">
       {/* 評価列の選択 */}
       <select
-        value={filter.colIndex}
+        value={filter.colIdx}
         onChange={e => {
           const input = parseInt(e.target.value);
           console.log(input);

@@ -3,8 +3,9 @@
 import { TableContent, TableFilter, TableSort } from "@/src/lib/definitions";
 import InputFilters from "@/src/ui/tables/view/input-filter";
 import { useImmer } from "use-immer";
-import InputViewButton from "./input-view-button";
-import Header from "./view-header";
+import InputView from "./input-view-button";
+import TableData from "./table-data";
+import TableHeader from "./table-header";
 
 export default function DataTable(
   {
@@ -14,33 +15,35 @@ export default function DataTable(
   }
 ) {
 
-  const [filters, setFilters] = useImmer<TableFilter[]>([]);
-  const [sort, setSorts] = useImmer<TableSort>({
-    colIndex: undefined,
-    comparator: (s1, s2) => 0,
-  });
-  const [view, setView] = useImmer(content.cols.map(c => true));
+  const initSort: TableSort = {
+    colIdx: undefined,
+    comparator: (row1, row2) => 0,
+    reverse: false,
+  };
+  const initView = content.cols.map(c => true);
 
-  // リセットボタン
+  const [filters, setFilters] = useImmer<TableFilter[]>([]);
+  const [sort, setSort] = useImmer(initSort);
+  const [view, setView] = useImmer(initView);
+
+  // 表示状態リセット
   function reset() {
     setFilters(draft => draft = []);
-    setSorts(draft => draft.colIndex = undefined);
-    setView(draft => draft = content.cols.map(() => true));
+    setSort(draft => {
+      draft.colIdx = undefined;
+      draft.reverse = false;
+    });
+    setView(draft => draft = initView);
   }
 
   // フィルター適用
   const filtered = {
     ...content,
-    rows: content.rows.filter(row => {
-      for (const filter of filters) {
-        if (filter.colIndex == undefined) continue;
-        const value = row[filter.colIndex];
-        if (!filter.predicate(value)) {
-          return false;
-        }
-      }
-      return true;
-    }),
+    rows: content.rows.filter(row => (
+      filters.every(filter => (
+        filter.predicate(row[filter.colIdx])
+      ))
+    )),
   };
 
   // ビュー適用
@@ -50,14 +53,14 @@ export default function DataTable(
   };
 
   // ソート適用
-  const { colIndex, comparator } = sort;
-  if (colIndex != undefined) {
-    forView.rows.sort((row1, row2) => {
-      return comparator(row1[colIndex], row2[colIndex]);
-    });
-  }
+  if (sort.colIdx != undefined) {
+    forView.rows.sort(sort.comparator);
+    if (sort.reverse) {
+      forView.rows.reverse();
+    }
+  };
 
-  const {cols, rows} = forView;
+  const { cols, rows } = forView;
 
   return (
     <div className="text-gray-700 flex flex-col gap-2">
@@ -67,11 +70,8 @@ export default function DataTable(
         </div>
         <div className="flex flex-col justify-end">
           <div className="flex gap-2">
-            <InputViewButton cols={content.cols} view={view} setView={setView} />
-            <button
-              onClick={reset}
-              className="btn"
-            >リセット</button>
+            <button onClick={reset} className="btn">リセット</button>
+            <InputView cols={content.cols} view={view} setView={setView} />
           </div>
         </div>
       </div>
@@ -81,13 +81,13 @@ export default function DataTable(
             <thead className="rounded-lg text-sm font-normal">
               <tr>
                 {cols.map((col, i) => (
-                  <Header
+                  <TableHeader
                     key={i}
-                    col={i}
-                    value={col.name}
+                    colIdx={i}
+                    col={col}
                     sort={sort}
-                    setSorts={setSorts}
-                    className="cursor-pointer hover:bg-base-300 duration-150" />
+                    setSort={setSort}
+                  />
                 ))}
               </tr>
             </thead>
@@ -98,12 +98,11 @@ export default function DataTable(
                   className="hover:bg-blue-100 duration-0"
                 >
                   {row.map((col, j) => (
-                    <td
+                    <TableData
                       key={j}
-                      className='border border-x-gray-200 border-y-gray-200 px-4 py-1'
-                    >
-                      {col}
-                    </td>
+                      type={cols[j].type}
+                      value={col}
+                    />
                   ))}
                 </tr>
               ))}

@@ -1,6 +1,6 @@
 import { TableContent } from "@/src/lib/definitions";
 import { Updater } from "use-immer";
-import InputRecords from "./table-cell/table-data";
+import InputData from "./table-cell/table-data";
 import InputHeader from "./table-cell/table-header";
 
 /** テーブル内容入力コンポーネント */
@@ -23,11 +23,11 @@ export default function InputTable(
           <th className="font-normal">
             No.
           </th>
-          {cols.map((col, i) => (
+          {cols.map((value, i) => (
             <th key={i}>
               <InputHeader
                 colIdx={i}
-                value={col.name}
+                value={value.name}
                 updateContent={updateContent}
               />
             </th>
@@ -40,9 +40,9 @@ export default function InputTable(
             <td className="px-3">
               {i + 1}
             </td>
-            {record.map((cell, j) => (
+            {record.map((value, j) => (
               <td key={j}>
-                <InputRecords
+                <InputData
                   rowIdx={i}
                   colIdx={j}
                   content={content}
